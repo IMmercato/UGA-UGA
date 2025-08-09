@@ -1,0 +1,173 @@
+/* ugas.css */
+/* Inspired by Hack Club Shipwrecked: bold colors, playful vibes, layered look */
+
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&display=swap');
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  --bg-1: #0e0b1d;
+  --bg-2: #1c1533;
+  --bg-3: #271d4a;
+  --ink: #f7f0ff;
+  --accent: #ff7d00;
+  --accent-2: #00f5a0;
+  --shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+  --ring: 0 0 0 6px rgba(255, 125, 0, 0.18);
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  color: var(--ink);
+  font-family: 'Rubik', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  background:
+    radial-gradient(1200px 700px at 80% -10%, rgba(255, 125, 0, 0.12), transparent 60%),
+    radial-gradient(900px 600px at 10% 20%, rgba(0, 245, 160, 0.12), transparent 60%),
+    linear-gradient(180deg, var(--bg-1), var(--bg-2) 40%, var(--bg-3));
+  display: block;
+  overflow-x: hidden;
+}
+
+/* Header/play icon */
+#play {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 22px auto 10px;
+  font-size: 22px;
+  color: var(--ink);
+  text-shadow: 0 2px 0 rgba(0,0,0,0.3);
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+#play .material-icons {
+  font-size: 44px;
+  color: var(--accent);
+  filter: drop-shadow(0 6px 14px rgba(255, 125, 0, 0.35));
+  animation: bob 3s ease-in-out infinite;
+}
+
+@keyframes bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+/* Button */
+#webcamButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 6px auto 26px;
+  padding: 12px 18px;
+  border-radius: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  background: linear-gradient(180deg, rgba(255, 125, 0, 0.9), rgba(255, 94, 0, 0.9));
+  color: white;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: transform 140ms ease, box-shadow 140ms ease, filter 140ms ease;
+}
+
+#webcamButton .material-icons {
+  font-size: 22px;
+}
+
+#webcamButton:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow), var(--ring);
+  filter: saturate(1.1);
+}
+
+#webcamButton:active {
+  transform: translateY(0);
+}
+
+/* STAGE: canvas on top, video beneath (and slightly larger to "overflow") */
+#webcam,
+#output_canvas {
+  position: absolute;
+  left: 50%;
+  top: 56%;
+  transform: translate(-50%, -50%);
+  /* Keep them responsive while preserving 4:3 */
+  width: min(92vw, 720px);
+  aspect-ratio: 4 / 3;
+  border-radius: 16px;
+}
+
+/* Video underlay */
+#webcam {
+  z-index: 0;
+  object-fit: cover;
+  filter: saturate(1.05) contrast(1.02);
+  transform: translate(-50%, -50%) scale(1.06); /* Overflow slightly beyond the canvas */
+  pointer-events: none; /* don't block clicks */
+  box-shadow: none; /* shadow comes from canvas so edges read clearly */
+}
+
+/* Canvas overlay */
+#output_canvas {
+  z-index: 1;
+  background: transparent; /* critical so the video is visible */
+  border: 4px dashed rgba(255, 125, 0, 0.9);
+  box-shadow: var(--shadow);
+}
+
+/* Subtle decorative glows around the stage */
+#output_canvas::after {
+  content: "";
+  position: absolute;
+  inset: -8%;
+  border-radius: 20px;
+  background:
+    radial-gradient(60% 50% at 20% 20%, rgba(0, 245, 160, 0.16), transparent 60%),
+    radial-gradient(70% 60% at 80% 80%, rgba(255, 125, 0, 0.15), transparent 60%);
+  z-index: -1;
+  filter: blur(22px);
+  pointer-events: none;
+}
+
+/* Material icons baseline normalization */
+.material-icons {
+  vertical-align: middle;
+  line-height: 1;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* Layout safety for very small screens */
+@media (max-width: 420px) {
+  #play { font-size: 18px; }
+  #play .material-icons { font-size: 38px; }
+  #webcamButton {
+    padding: 10px 14px;
+    border-radius: 12px;
+    font-size: 14px;
+  }
+  #webcam, #output_canvas {
+    width: min(94vw, 640px);
+    border-radius: 14px;
+  }
+  #output_canvas {
+    border-width: 3px;
+  }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  #play .material-icons { animation: none; }
+  #webcamButton { transition: none; }
+}
