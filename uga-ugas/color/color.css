@@ -1,0 +1,81 @@
+:root {
+  --bg: #0b0b13;
+  --ink: #f7f7fb;
+  --muted: #a0a4b8;
+  --chip: rgba(255, 255, 255, 0.08);
+  --chip-hover: rgba(255, 255, 255, 0.15);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  background: radial-gradient(1200px 800px at 20% 20%, #121225 0%, #0b0b13 60%, #07070d 100%);
+  color: var(--ink);
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, sans-serif;
+}
+
+#stage {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+}
+
+video, canvas {
+  position: absolute;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+#webcam {
+  object-fit: cover;
+  opacity: 0.18;
+  filter: saturate(1.2) contrast(1.05) blur(0.2px);
+  z-index: 0;
+}
+
+#paint_canvas { z-index: 1; }
+#ui_canvas { z-index: 2; pointer-events: none; }
+
+#ui {
+  position: fixed;
+  inset: 16px 16px auto auto;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.fab {
+  all: unset;
+  background: var(--chip);
+  color: var(--ink);
+  width: 56px; height: 56px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: 180ms background ease, 180ms transform ease;
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+.fab:hover { background: var(--chip-hover); transform: translateY(-1px); }
+.fab.small { width: 40px; height: 40px; border-radius: 10px; }
+
+#help {
+  margin-left: 8px;
+  padding: 10px 14px;
+  background: var(--chip);
+  border-radius: 12px;
+  font-size: 12px;
+  line-height: 1.35;
+  color: var(--muted);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+}
+
+@media (max-width: 520px) {
+  #help { display: none; }
+}

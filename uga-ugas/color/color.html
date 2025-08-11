@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Uga-Color</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <link rel="stylesheet" href="color.css" />
+</head>
+<body>
+  <div id="ui">
+    <button id="webcamButton" class="fab"><i class="material-icons">play_arrow</i></button>
+    <button id="clearButton" class="fab small" title="Clear"><i class="material-icons">delete</i></button>
+    <button id="saveButton" class="fab small" title="Save"><i class="material-icons">download</i></button>
+    <div id="help">
+      <div>Paint when your wrists are above the belly</div>
+      <div>Hover LEFT hand over the rainbow to pick color</div>
+      <div>Both hands up (1s) = Clear</div>
+    </div>
+  </div>
+
+  <audio id="ugasAudio" src="ugas.wav" preload="auto" loop></audio>
+
+  <div id="stage">
+    <video id="webcam" autoplay playsinline muted></video>
+    <canvas id="paint_canvas"></canvas>
+    <canvas id="ui_canvas"></canvas>
+  </div>
+
+  <script type="module" src="paint.js"></script>
+</body>
+</html>
